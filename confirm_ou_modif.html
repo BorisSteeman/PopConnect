@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Confirmation ou modification de trajet</title>
+</head>
+<body>
+    <div id="app" class="modification">
+        <h2>Confirmation ou modification de trajet</h2>
+        <form action="" method="post" @submit.prevent="validateForm">
+            <div>
+                <label for="confirmation">Êtes-vous sûr de toujours pouvoir assurer ce trajet ?</label>
+                <label><input type="radio" name="confirmation" value="oui" v-model="confirmation" @change="resetFields('oui')"> Oui</label>
+                <label><input type="radio" name="confirmation" value="non" v-model="confirmation" @change="resetFields('non')"> Non</label>
+            </div>
+            <br>
+            <div>
+                <label for="nombre_max">Si oui, combien de personnes maximum souhaitez-vous accueillir ?</label>
+                <input type="number" min="1" id="nombre_max" placeholder="Nombre de personnes" v-model="nombreMax" v-bind:disabled="confirmation !== 'oui'">
+            </div>
+            <br>
+            <div>
+                <label for="date_trajet">Si non, quand comptez-vous refaire ce trajet ?</label>
+                <input type="date" id="date_trajet" v-model="dateTrajet" v-bind:disabled="confirmation !== 'non'">
+            </div>
+            <br>
+            <button type="submit">Soumettre</button>
+        </form>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        createApp({
+            data() {
+                return {
+                    confirmation: '',
+                    nombreMax: '',
+                    dateTrajet: ''
+                };
+            },
+            methods: {
+                resetFields(selection) {
+                    if (selection === 'oui') {
+                        this.dateTrajet = '';
+                    } else if (selection === 'non') {
+                        this.nombreMax = '';
+                    }
+                },
+                validateForm(event) {
+                    if (this.confirmation === '') {
+                        alert("Veuillez confirmer votre trajet ou indiquer une date ultérieure.");
+                        return;
+                    }
+                    if (this.confirmation === 'oui' && !this.nombreMax) {
+                        alert("Veuillez indiquer le nombre de passagers.");
+                        return;
+                    }
+                    if (this.confirmation === 'non' && !this.dateTrajet) {
+                        alert("Veuillez sélectionner une date pour votre prochain trajet.");
+                        return;
+                    }
+                    event.target.submit();
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

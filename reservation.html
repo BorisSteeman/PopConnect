@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Réservation</title>
+    <!-- Le style est ajouté ici -->
+</head>
+<body>
+    <div class="reservation">
+        <h2>Trajet</h2>
+        <form id="reservation-form" action="" method="post">
+            <label for="depart">Lieu de départ :</label>
+            <select name="depart" id="depart" class="form-check">
+                <option value="">Veuillez choisir un lieu</option>
+                <option value="Bruxelles">Bruxelles</option>
+                <option value="Liège">Liège</option>
+                <option value="Namur">Namur</option>
+                <option value="Charleroi">Charleroi</option>
+            </select>
+
+            <label for="arrivee">Lieu d'arrivée :</label>
+            <select name="arrivee" id="arrivee" class="form-check">
+                <option value="">Veuillez choisir un lieu</option>
+                <option value="Bruxelles">Bruxelles</option>
+                <option value="Liège">Liège</option>
+                <option value="Namur">Namur</option>
+                <option value="Charleroi">Charleroi</option>
+            </select>
+
+            <label for="date">Date de départ :</label>
+            <input type="date" name="date" id="date" required pattern="\d{4}-\d{2}-\d{2}" />
+            <span class="validity"></span>
+
+            <label for="appt-time">Heure de départ :</label>
+            <input id="appt-time" type="time" name="heure" value="13:30" required/>
+
+            <div class="checkbox-group">
+                <label for="a-r">Aller-retour :</label>
+                <input type="checkbox" name="a-r" id="a-r" value="coché">
+              </div>
+              
+            <label for="retour-date">Date de retour :</label>
+            <input type="date" name="date-retour" id="retour-date" required pattern="\d{4}-\d{2}-\d{2}" />
+            <span class="validity"></span>
+
+            <button type="submit" id="submit-btn">Soumettre</button>
+        </form>
+    </div>
+
+    <style>
+        :root {
+          --primary-color: #508bbb;       /* Bleu moderne */
+          --background-color: #F8F9FA;    /* Gris très clair */
+          --text-color: #343A40;          /* Gris foncé */
+        }
+      
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: var(--background-color);
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          color: var(--text-color);
+        }
+      
+        .reservation {
+          background-color: white;
+          padding: 2rem 2.5rem;
+          border-radius: 12px;
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+          width: 400px;
+        }
+
+        .checkbox-group label {
+          margin: 0;
+          flex: 1;
+        }
+      
+        h2 {
+          text-align: center;
+          margin-bottom: 1.5rem;
+          color: var(--primary-color);
+        }
+      
+        form {
+          display: grid;
+          gap: 1rem;
+        }
+        
+        label {
+          font-weight: 600;
+        }
+      
+        select,
+        input[type="date"],
+        input[type="time"],
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid #ced4da;
+          border-radius: 5px;
+          font-size: 1rem;
+        }
+      
+        input[type="checkbox"] {
+          margin-left: 0.5rem;
+        }
+      
+        button {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          padding: 0.75rem;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+      
+        button:hover {
+          background-color: #3b6e93;
+        }
+      
+        .validity {
+          color: red;
+          font-size: 0.85rem;
+        }
+      </style>
+      
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("reservation-form");
+            const depart = document.getElementById("depart");
+            const arrivee = document.getElementById("arrivee");
+
+            form.addEventListener("submit", function (event) {
+                if (depart.value === "" || arrivee.value === "") {
+                    event.preventDefault(); // Empêche l'envoi du formulaire
+                    alert("Veuillez sélectionner un lieu de départ et un lieu d'arrivée avant de soumettre le formulaire.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
